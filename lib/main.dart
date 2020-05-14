@@ -18,6 +18,16 @@ class _MyAppState extends State<MyApp> {
   String secondButtonText = 'Record video';
   double textSize = 20;
 
+  Future<void> _uploadFile(filename) async {
+    StorageReference storageReference;
+    storageReference = FirebaseStorage.instance.ref().child("images/$filename");
+
+    final StorageUploadTask uploadTask = storageReference.putFile('video');
+    final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+    final String url = (await downloadUrl.ref.getDownloadURL());
+    print("URL is $url");
+  }
+
 //// This function will helps you to pick a Video File from Camera
 //  VideoPlayerController _cameraVideoPlayerController;
 //  _pickVideoFromCamera() async {
@@ -101,6 +111,7 @@ class _MyAppState extends State<MyApp> {
         GallerySaver.saveVideo(recordedVideo.path).then((path) {
           setState(() {
             secondButtonText = 'video saved!';
+            _uploadFile(path);
           });
         });
       }
