@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 void main() => runApp(MyApp());
@@ -18,13 +17,14 @@ class _MyAppState extends State<MyApp> {
   String secondButtonText = 'Record video';
   double textSize = 20;
 
-  Future<void> _uploadFile(filename) async {
+  Future<void> _uploadFile(File fileToUpload) async {
     StorageReference storageReference;
-    storageReference = FirebaseStorage.instance.ref().child("images/$filename");
-
-    final StorageUploadTask uploadTask = storageReference.putFile('video');
+    storageReference = FirebaseStorage.instance.ref().child("videos/");
+    final StorageUploadTask uploadTask =
+                    storageReference.putData(fileToUpload.readAsBytesSync());
     final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
     final String url = (await downloadUrl.ref.getDownloadURL());
+
     print("URL is $url");
   }
 
@@ -89,13 +89,9 @@ class _MyAppState extends State<MyApp> {
     ImagePicker.pickImage(source: ImageSource.camera)
         .then((File recordedImage) {
       if (recordedImage != null && recordedImage.path != null) {
+        _uploadFile(recordedImage);
         setState(() {
           firstButtonText = 'saving in progress...';
-        });
-        GallerySaver.saveImage(recordedImage.path).then((path) {
-          setState(() {
-            firstButtonText = 'image saved!';
-          });
         });
       }
     });
@@ -105,14 +101,9 @@ class _MyAppState extends State<MyApp> {
     ImagePicker.pickVideo(source: ImageSource.camera)
         .then((File recordedVideo) {
       if (recordedVideo != null && recordedVideo.path != null) {
+        _uploadFile(recordedVideo);
         setState(() {
           secondButtonText = 'saving in progress...';
-        });
-        GallerySaver.saveVideo(recordedVideo.path).then((path) {
-          setState(() {
-            secondButtonText = 'video saved!';
-            _uploadFile(path);
-          });
         });
       }
     });
