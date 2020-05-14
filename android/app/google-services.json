@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "283936376683",
+    "firebase_url": "https://videofirebase-3a8ff.firebaseio.com",
+    "project_id": "videofirebase-3a8ff",
+    "storage_bucket": "videofirebase-3a8ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283936376683:android:74d5f9acd332d51c34ae2e",
+        "android_client_info": {
+          "package_name": "viralipurbey.capturevideoexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283936376683-bfcfv81o36ul164voftrh0jmnjngrdgr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoEqN9LtJwyvJJggFh_SKt3WF1uhCky2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283936376683-bfcfv81o36ul164voftrh0jmnjngrdgr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
